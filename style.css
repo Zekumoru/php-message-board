@@ -132,6 +132,11 @@ textarea.input {
     list-style-type: none;
 }
 
+.no-messages-label {
+    text-align: center;
+    padding: 60px 0;
+}
+
 /* Individual message */
 .message-item {
     padding: 16px 0;

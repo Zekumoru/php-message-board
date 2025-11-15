@@ -68,17 +68,21 @@
         <div class="messages-card card">
             <h2>Messaggi Recenti</h2>
 
-            <ul class="messages-list">
-                <?php foreach ($messages as $message): ?>
-                    <li class="message-item">
-                        <div class="message-details">
-                            <span class="message-author"><?= $message->name ?></span>
-                            <span class="message-date"><?= $message->created_at->format("Y/m/d H:i") ?></span>
-                        </div>
-                        <p class="message-text"><?= $message->text ?></p>
-                    </li>
-                <?php endforeach ?>
-            </ul>
+            <?php if (empty($messages)): ?>
+                <p class="no-messages-label">Ancora nessun messaggio!</p>
+            <?php else: ?>
+                <ul class="messages-list">
+                    <?php foreach ($messages as $message): ?>
+                        <li class="message-item">
+                            <div class="message-details">
+                                <span class="message-author"><?= $message->name ?></span>
+                                <span class="message-date"><?= $message->created_at->format("Y/m/d H:i") ?></span>
+                            </div>
+                            <p class="message-text"><?= $message->text ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
         </div>
 
     </div>
