@@ -1,5 +1,35 @@
-<?php require "db/conn.php"; ?>
-<?php require "utils/error.php"; ?>
+<?php
+require "db/conn.php";
+require "utils/error.php";
+require_once "models/Message.php";
+require_once "repositories/MessageRepository.php";
+
+$messageRepository = new MessageRepository($conn);
+
+$name = '';
+$text = '';
+$messages = $messageRepository->findAllMessages();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $messageDto = new CreateMessageDTO($_POST);
+    $name = $messageDto->name;
+    $text = $messageDto->text;
+
+    if (empty($name)) {
+        $nameErr = "Il nome è obbligatorio";
+    }
+
+    if (empty($text)) {
+        $textErr = "Il messaggio è obbligatorio";
+    }
+
+    if (!isset($nameErr) && !isset($textErr)) {
+        $messageRepository->insertOne($messageDto);
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,37 +43,6 @@
 
 <body>
     <div id="app">
-        <?php
-        require_once "models/Message.php";
-        require_once "repositories/MessageRepository.php";
-
-        $messageRepository = new MessageRepository($conn);
-
-        $name = '';
-        $text = '';
-        $messages = $messageRepository->findAllMessages();
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $messageDto = new CreateMessageDTO($_POST);
-            $name = $messageDto->name;
-            $text = $messageDto->text;
-
-            if (empty($name)) {
-                $nameErr = "Il nome è obbligatorio";
-            }
-
-            if (empty($text)) {
-                $textErr = "Il messaggio è obbligatorio";
-            }
-
-            if (!isset($nameErr) && !isset($textErr)) {
-                $messageRepository->insertOne($messageDto);
-                header('Location: ' . $_SERVER['PHP_SELF']);
-                exit;
-            }
-        }
-        ?>
-
         <div class="title-wrapper">
             <h1>Benvenuto nel Message Board!</h1>
             <p>Inizia a scrivere e condividere i tuoi pensieri su questa bacheca.</p>
