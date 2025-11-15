@@ -1,9 +1,9 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "php_message_board";
+$servername = getenv("DB_HOST") ?: "localhost";
+$username = getenv("DB_USER") ?: "root";
+$password = getenv("DB_PASS") ?: "root";
+$dbname = getenv("DB_NAME") ?: "php_message_board";
 
 try {
     $conn = new PDO("mysql:host=$servername", $username, $password);
