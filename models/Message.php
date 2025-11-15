@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../utils/sanitize.php';
+
 class Message
 {
     // TODO: Explain these publics and the types (since PHP didn't use to have it)
@@ -29,10 +31,10 @@ class CreateMessageDTO
     public string $name;
     public string $text;
 
-    public function __construct(string $name, string $text)
+    public function __construct(array $data)
     {
-        $this->name = $name;
-        $this->text = $text;
+        $this->name = sanitize($data['name']);
+        $this->text = sanitize($data['text']);
     }
 }
 
@@ -41,9 +43,9 @@ class UpdateMessageDTO
     public string $name;
     public string $text;
 
-    public function __construct(string $name, string $text)
+    public function __construct(array $data)
     {
-        $this->name = $name;
-        $this->text = $text;
+        $this->name = sanitize($data['name']);
+        $this->text = sanitize($data['text']);
     }
 }

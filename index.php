@@ -1,3 +1,6 @@
+<?php require "db/conn.php"; ?>
+<?php require "utils/error.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,8 +14,32 @@
 <body>
     <div id="app">
         <?php
+        require_once "models/Message.php";
+        require_once "repositories/MessageRepository.php";
+
         $name = '';
-        $message = '';
+        $text = '';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $messageRepository = new MessageRepository($conn);
+            $messageDto = new CreateMessageDTO($_POST);
+            $name = $messageDto->name;
+            $text = $messageDto->text;
+
+            if (empty($name)) {
+                $nameErr = "Il nome è obbligatorio";
+            }
+
+            if (empty($text)) {
+                $textErr = "Il messaggio è obbligatorio";
+            }
+
+            if (!isset($nameErr) && !isset($textErr)) {
+                $messageRepository->insertOne($messageDto);
+                $name = "";
+                $text = "";
+            }
+        }
         ?>
 
         <div class="title-wrapper">
@@ -23,12 +50,14 @@
         <form class="form-container card" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
             <div class="form-control">
                 <label for="name">Name</label>
-                <input type="text" class="input" id="name" value="<?= $name ?>" />
+                <input type="text" class="input" id="name" name="name" value="<?= $name ?>" />
+                <?= isset($nameErr) ? "<span class=\"error\">* $nameErr</span>" : '' ?>
             </div>
 
             <div class="form-control">
                 <label for="message">Message</label>
-                <textarea type="text" class="input" id="message"><?= $message ?></textarea>
+                <textarea type="text" class="input" id="text" name="text"><?= $text ?></textarea>
+                <?= isset($textErr) ? "<span class=\"error\">* $textErr</span>" : '' ?>
             </div>
 
             <button type="submit" class="btn">Invia</button>

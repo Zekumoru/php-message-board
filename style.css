@@ -29,6 +29,12 @@ body {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
+/* Utilities */
+
+.error {
+    color: #c10f0f;
+}
+
 /* Headings */
 h1 {
     margin-bottom: 10px;
@@ -77,6 +83,10 @@ label {
     border-color: #4a90e2;
     outline: none;
     box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
+}
+
+span.error {
+    margin-top: 4px;
 }
 
 /* Textarea */
