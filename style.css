@@ -1,0 +1,153 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
+}
+
+/* Page layout */
+body {
+    background: #f5f7fa;
+    padding: 40px;
+    color: #333;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: #222;
+}
+
+p {
+    color: #555;
+}
+
+/* Title wrapper */
+
+.title-wrapper h1,
+.title-wrapper p {
+    text-align: center;
+}
+
+/* Form elements */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-weight: 600;
+    color: #444;
+}
+
+.input {
+    padding: 10px 14px;
+    border: 1.5px solid #bbb;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25);
+}
+
+/* Textarea */
+textarea.input {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #4a90e2;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn:hover {
+    background: #3f7fcb;
+}
+
+/* Messages card */
+.messages-card {
+    background: #fff;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.messages-card h2 {
+    margin-bottom: 12px;
+    font-size: 20px;
+    color: #222;
+}
+
+.messages-list {
+    list-style-type: none;
+}
+
+/* Individual message */
+.message-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.message-item:last-child {
+    border-bottom: none;
+}
+
+.message-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.message-author {
+    font-weight: 600;
+    color: #333;
+}
+
+.message-date {
+    color: #888;
+}
+
+.message-text {
+    color: #555;
+}
