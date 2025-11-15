@@ -50,13 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form class="form-container card" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
             <div class="form-control">
-                <label for="name">Name</label>
+                <label for="name">Nome</label>
                 <input type="text" class="input" id="name" name="name" value="<?= $name ?>" />
                 <?= isset($nameErr) ? "<span class=\"error\">* $nameErr</span>" : '' ?>
             </div>
 
             <div class="form-control">
-                <label for="message">Message</label>
+                <label for="message">Messaggio</label>
                 <textarea type="text" class="input" id="text" name="text"><?= $text ?></textarea>
                 <?= isset($textErr) ? "<span class=\"error\">* $textErr</span>" : '' ?>
             </div>
