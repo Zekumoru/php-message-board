@@ -17,11 +17,13 @@
         require_once "models/Message.php";
         require_once "repositories/MessageRepository.php";
 
+        $messageRepository = new MessageRepository($conn);
+
         $name = '';
         $text = '';
+        $messages = $messageRepository->findAllMessages();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $messageRepository = new MessageRepository($conn);
             $messageDto = new CreateMessageDTO($_POST);
             $name = $messageDto->name;
             $text = $messageDto->text;
@@ -36,8 +38,8 @@
 
             if (!isset($nameErr) && !isset($textErr)) {
                 $messageRepository->insertOne($messageDto);
-                $name = "";
-                $text = "";
+                header('Location: ' . $_SERVER['PHP_SELF']);
+                exit;
             }
         }
         ?>
@@ -67,21 +69,15 @@
             <h2>Messaggi Recenti</h2>
 
             <ul class="messages-list">
-                <li class="message-item">
-                    <div class="message-details">
-                        <span class="message-author">Mario Rossi</span>
-                        <span class="message-date">15/11/2025 19:12</span>
-                    </div>
-                    <p class="message-text">Ciao a tutti!</p>
-                </li>
-
-                <li class="message-item">
-                    <div class="message-details">
-                        <span class="message-author">Luca</span>
-                        <span class="message-date">15/11/2025 19:12</span>
-                    </div>
-                    <p class="message-text">Buona giornata!</p>
-                </li>
+                <?php foreach ($messages as $message): ?>
+                    <li class="message-item">
+                        <div class="message-details">
+                            <span class="message-author"><?= $message->name ?></span>
+                            <span class="message-date"><?= $message->created_at->format("Y/m/d H:i") ?></span>
+                        </div>
+                        <p class="message-text"><?= $message->text ?></p>
+                    </li>
+                <?php endforeach ?>
             </ul>
         </div>
 
