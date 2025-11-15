@@ -13,34 +13,73 @@ Una semplice applicazione **Message Board** creata per esercitarmi con **PHP**, 
 
 ## 🛠 Tecnologie
 
-- PHP 8.x
-- MySQL
+- PHP 8.x (Docker: `php:8.x-apache`)
+- MySQL (Docker: `mysql:8.0`)
 - HTML5 & CSS3
-- MAMP (per sviluppo locale)
+- Docker & Docker Compose (ambiente consigliato)
+- MAMP (solo come alternativa locale)
 
 ## 📦 Installazione
 
-1. Clona il repository:
-
-    ```bash
-    git clone git@github.com:Zekumoru/php-message-board.git
-    ```
-
-2. Sposta la cartella dentro `MAMP/htdocs`.
-
-3. Assicurati che `db/conn.php` (host, utente, password, database) sia configurato correttamente.
-
-Questo file crea automaticamente il database e la tabella, quindi non serve nessun passaggio manuale.
-
-## ▶️ Avvio
-
-Apri il browser e vai su:
+### 🔹 Clone del repository
 
 ```bash
-http://message-board.local
+git clone git@github.com:Zekumoru/php-message-board.git
+cd php-message-board
 ```
 
-(o `http://localhost/message-board` se non usi vhost)
+## 🔹 Avvio con Docker (recomandato)
+
+Il progetto include un setup completo Docker (PHP + Apache + MySQL).
+
+1. Crea un file `.env` nella root del progetto con il seguente contenuto:
+
+    ```bash
+    DB_HOST=db
+    DB_USER=admin
+    DB_PASS=root
+    DB_NAME=php_message_board
+    ```
+
+    I parametri vengono poi letti automaticamente da docker-compose.yml e dal file conn.php.
+
+2. Avviare i container:
+
+    ```bash
+    docker compose up -d
+    ```
+
+3. Apri l’applicazione:
+
+    ```bash
+    http://localhost:8080
+    ```
+
+4. Per accedere al database dalla shell:
+
+    ```bash
+    docker exec -it message_board_db mysql -u root -p
+    ```
+
+### 🔹 Avvio con MAMP (opzionale)
+
+1. Sposta la cartella del progetto in:
+
+    ```bash
+    /Applications/MAMP/htdocs/
+    ```
+
+2. Assicurati che `db/conn.php` sia configurato con host, utente e password corretti.
+
+    Questo file **crea automaticamente** il database e la tabella alla prima esecuzione.
+
+3. Apri:
+
+    ```bash
+    http://message-board.local
+    ```
+
+    (Oppure `http://localhost/message-board` se non usi vhost.)
 
 ## 📜 Licenza
 
