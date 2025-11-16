@@ -28,7 +28,7 @@ git clone git@github.com:Zekumoru/php-message-board.git
 cd php-message-board
 ```
 
-## 🔹 Avvio con Docker (recomandato)
+## 🔹 Avvio con Docker (raccomandato)
 
 Il progetto include un setup completo Docker (PHP + Apache + MySQL).
 
