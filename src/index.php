@@ -1,20 +1,25 @@
 <?php
+// Includiamo i file condivisi per riutilizzare connessione, modelli e gestione errori senza duplicare codice.
 require "db/conn.php";
 require "utils/error.php";
 require_once "models/Message.php";
 require_once "repositories/MessageRepository.php";
 
+// Il repository incapsula l'accesso al DB cosi' il resto dell'app non deve conoscere SQL.
 $messageRepository = new MessageRepository($conn);
 
+// Manteniamo gli ultimi valori del form per poterli ristampare insieme agli errori di validazione.
 $name = '';
 $text = '';
 $messages = $messageRepository->findAllMessages();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Creiamo un DTO che pulisce e valida i campi di input prima di arrivare al DB.
     $messageDto = new CreateMessageDTO($_POST);
     $name = $messageDto->name;
     $text = $messageDto->text;
 
+    // Evitiamo insert vuote con semplici controlli lato server.
     if (empty($name)) {
         $nameErr = "Il nome è obbligatorio";
     }
@@ -23,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $textErr = "Il messaggio è obbligatorio";
     }
 
+    // Se tutto e' valido persistiamo e facciamo redirect per prevenire il doppio submit del form.
     if (!isset($nameErr) && !isset($textErr)) {
         $messageRepository->insertOne($messageDto);
         header('Location: ' . $_SERVER['PHP_SELF']);

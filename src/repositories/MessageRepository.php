@@ -4,12 +4,14 @@ require_once __DIR__ . '/../models/Message.php';
 
 class MessageRepository
 {
+    // La dipendenza da PDO viene iniettata per poterla sostituire facilmente nei test.
     public function __construct(private PDO $conn)
     {
     }
 
     public function findById(int $id): ?Message
     {
+        // Prepared statement per prevenire SQL injection e riutilizzare la query.
         $stmt = $this->conn->prepare("SELECT * FROM messages WHERE id = ?");
         $stmt->execute([$id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,6 +26,7 @@ class MessageRepository
      */
     public function findAllMessages(): array
     {
+        // Ordiniamo lato SQL cosi' il template riceve gia' i dati piu' recenti in cima.
         $stmt = $this->conn->prepare("SELECT * FROM messages ORDER BY created_at DESC");
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,6 +35,7 @@ class MessageRepository
 
     public function insertOne(CreateMessageDTO $message): bool
     {
+        // Il repository si occupa solo di SQL: il DTO garantisce valori puliti.
         $stmt = $this->conn->prepare("INSERT INTO messages (name, text) VALUES (?, ?)");
         return $stmt->execute([$message->name, $message->text]);
     }

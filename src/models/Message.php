@@ -4,7 +4,7 @@ require_once __DIR__ . '/../utils/sanitize.php';
 
 class Message
 {
-    // TODO: Explain these publics and the types (since PHP didn't use to have it)
+    // Proprietà tipizzate pubbliche: rendono auto-documentato l'oggetto e accessibile nei template senza getter.
     public function __construct(
         public int $id,
         public string $name,
@@ -13,7 +13,7 @@ class Message
     ) {
     }
 
-    // TODO: Explain why we need fromArray
+    // Metodo factory per trasformare una riga del DB in un oggetto ricco che controlliamo noi.
     public static function fromArray(array $row): self
     {
         return new self(
@@ -25,7 +25,6 @@ class Message
     }
 }
 
-// TODO: Explain what a DTO is
 class CreateMessageDTO
 {
     public string $name;
@@ -33,6 +32,7 @@ class CreateMessageDTO
 
     public function __construct(array $data)
     {
+        // Il DTO filtra e normalizza i dati in ingresso cosi' il repository riceve sempre valori sicuri.
         $this->name = sanitize($data['name']);
         $this->text = sanitize($data['text']);
     }
@@ -45,6 +45,7 @@ class UpdateMessageDTO
 
     public function __construct(array $data)
     {
+        // Riutilizziamo la stessa logica di sanitizzazione per gli update futuri.
         $this->name = sanitize($data['name']);
         $this->text = sanitize($data['text']);
     }
